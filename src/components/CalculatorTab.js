@@ -7,7 +7,7 @@ import QuickPreview from './QuickPreview';
 
 const CalculatorTab = ({ params, calculations, handleParamChange }) => {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full">
       {/* Parameters Section */}
       <div className="space-y-6">
         <ParameterSection title="Parámetros de Material" icon={FileText} iconColor="text-blue-400">
