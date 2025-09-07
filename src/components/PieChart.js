@@ -5,8 +5,8 @@ const PieChart = ({ data }) => {
   let currentAngle = 0;
   
   return (
-    <div className="flex items-center justify-center">
-      <div className="relative w-80 h-80">
+    <div className="flex items-center justify-center space-y-5">
+      <div className="flex items-center justify-center">
       <svg width="320" height="320" className="transform -rotate-90">
         {data.map((item, index) => {
           const percentage = (item.value / total) * 100;
