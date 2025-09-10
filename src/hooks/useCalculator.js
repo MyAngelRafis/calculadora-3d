@@ -11,38 +11,52 @@ export const useCalculator = () => {
     electricityPrice: 0.25,     // EUR per kWh
     safetyMargin: 1.2,          // factor
     profitMargin: 50,           // percentage
-    pieceName: ''               // piece name
+    pieceName: "Mi Pieza 3D",
+    description: "Descripción de la pieza",
   });
 
   const handleParamChange = (key, value) => {
+    // Lista de campos que deben ser numéricos
+    const numericFields = [
+      "filamentCost",
+      "pieceWeight",
+      "printTime",
+      "laborTime",
+      "laborCost",
+      "powerConsumption",
+      "electricityPrice",
+      "safetyMargin",
+      "profitMargin"
+    ];
+
     setParams(prev => ({
       ...prev,
-      [key]: parseFloat(value) || 0
+      [key]: numericFields.includes(key) ? parseFloat(value) || 0 : value
     }));
   };
 
   const calculations = useMemo(() => {
     // Material cost (filament)
     const materialCost = (params.filamentCost * params.pieceWeight) / 1000;
-    
+
     // Labor cost
     const laborCost = (params.laborCost * params.laborTime) / 60;
-    
+
     // Electricity cost
     const electricityCost = (params.powerConsumption * params.printTime * params.electricityPrice) / (60 * 1000);
-    
+
     // Base cost
     const baseCost = materialCost + laborCost + electricityCost;
-    
+
     // Cost with safety margin
     const costWithSafety = baseCost * params.safetyMargin;
-    
+
     // Safety margin cost
     const safetyMarginCost = costWithSafety - baseCost;
-    
+
     // Final price with profit margin
     const finalPrice = costWithSafety * (1 + params.profitMargin / 100);
-    
+
     return {
       materialCost,
       laborCost,
@@ -64,6 +78,7 @@ export const useCalculator = () => {
 
   return {
     params,
+    setParams,
     calculations,
     chartData,
     handleParamChange

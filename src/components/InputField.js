@@ -7,6 +7,8 @@ const InputField = ({
   type = "number", 
   step = "0.01",
   focusColor = "blue",
+  textarea = false,
+  rows = 3,
   ...props 
 }) => {
   const focusClasses = {
@@ -23,14 +25,24 @@ const InputField = ({
       <label className="block text-sm font-medium text-gray-300 mb-2">
         {label}
       </label>
-      <input
-        type={type}
-        step={step}
-        value={value}
-        onChange={onChange}
-        className={`w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 ${focusClasses[focusColor]} focus:border-transparent transition-all duration-200`}
-        {...props}
-      />
+      {textarea ? (
+        <textarea
+          value={value}
+          onChange={onChange}
+          rows={rows}
+          className={`w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 ${focusClasses[focusColor]} focus:border-transparent transition-all duration-200`}
+          {...props}
+        />
+      ) : (
+        <input
+          type={type}
+          step={type === "number" ? step : undefined}
+          value={value}
+          onChange={onChange}
+          className={`w-full bg-gray-700/50 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 ${focusClasses[focusColor]} focus:border-transparent transition-all duration-200`}
+          {...props}
+        />
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileText, Settings, Euro, PieChart } from 'lucide-react';
+import { FileText, Settings, Euro, PieChart, ToolCaseIcon } from 'lucide-react';
 import ParameterSection from './ParameterSection';
 import InputField from './InputField';
 import ProfitSlider from './ProfitSlider';
@@ -10,6 +10,24 @@ const CalculatorTab = ({ params, calculations, handleParamChange }) => {
     <div className="grid grid-cols-1 gap-6">
       {/* Parameters Section */}
       <div className="space-y-6">
+        <ParameterSection title="Pieza" icon={ToolCaseIcon} iconColor="text-blue-400">
+          <InputField
+            label="Nombre de la pieza"
+            value={params.pieceName}
+            onChange={(e) => handleParamChange('pieceName', e.target.value)}
+            focusColor="blue"
+            type="text"
+          />
+          <InputField
+            label="Descripción"
+            value={params.description}
+            onChange={(e) => handleParamChange('description', e.target.value)}
+            focusColor="blue"
+            textarea
+            rows={4}
+          />
+        </ParameterSection>
+
         <ParameterSection title="Parámetros de Material" icon={FileText} iconColor="text-blue-400">
           <InputField
             label="Coste del filamento (€/kg)"
