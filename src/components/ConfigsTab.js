@@ -35,7 +35,7 @@ const ConfigsTab = ({ onImport }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
+      <div className="min-h-screen bg-gradient-to-br p-6">
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-center h-96">
             <div className="text-center">
@@ -61,7 +61,7 @@ const ConfigsTab = ({ onImport }) => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
+    <div className="min-h-screen bg-gradient-to-br p-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
