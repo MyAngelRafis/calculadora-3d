@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, Download, ChevronDown, ChevronUp, Clock, Weight, DollarSign, Timer, Package, Shield, TrendingUp, Zap } from 'lucide-react';
+import { 
+  Trash2, Download, ChevronDown, ChevronUp, Clock, Weight, 
+  DollarSign, Timer, Package, Shield, TrendingUp, Zap 
+} from 'lucide-react';
 import { getConfigs, deleteConfig } from '../api/configService';
-
 
 const ConfigsTab = ({ onImport }) => {
   const [configs, setConfigs] = useState([]);
@@ -28,10 +30,7 @@ const ConfigsTab = ({ onImport }) => {
   const formatTime = (minutes) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
-    if (hours > 0) {
-      return `${hours}h ${mins}m`;
-    }
-    return `${mins}m`;
+    return hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
   };
 
   if (loading) {
@@ -48,6 +47,18 @@ const ConfigsTab = ({ onImport }) => {
       </div>
     );
   }
+
+  const renderParameterCard = (icon, title, value, IconComponent, iconColor) => (
+    <div className="flex items-start space-x-3 p-4 bg-slate-800/50 rounded-lg border border-slate-700/30">
+      <div className={`flex-shrink-0 w-10 h-10 bg-${iconColor}-500/20 rounded-lg flex items-center justify-center`}>
+        <IconComponent className={`w-5 h-5 text-${iconColor}-400`} />
+      </div>
+      <div>
+        <p className="text-slate-400 text-sm font-medium mb-1">{title}</p>
+        <p className="text-white text-lg font-bold">{value}</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
@@ -70,12 +81,12 @@ const ConfigsTab = ({ onImport }) => {
           </div>
         ) : (
           <div className="grid gap-6">
-            {configs.map((config, index) => (
+            {configs.map((config) => (
               <div
                 key={config._id}
                 className="group bg-slate-800/60 backdrop-blur-xl rounded-2xl border border-slate-700/50 p-6 hover:bg-slate-800/80 hover:border-slate-600/50 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
-                style={{ animationDelay: `${index * 100}ms` }}
               >
+                {/* Config Header */}
                 <div className="flex justify-between items-start mb-4">
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
@@ -89,6 +100,7 @@ const ConfigsTab = ({ onImport }) => {
                     </p>
                   </div>
 
+                  {/* Action Buttons */}
                   <div className="flex items-center space-x-3 ml-6">
                     <button
                       onClick={() => onImport(config._id)}
@@ -113,9 +125,9 @@ const ConfigsTab = ({ onImport }) => {
                   className="flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors text-sm font-medium group/toggle"
                 >
                   {expandedId === config._id ? (
-                    <ChevronUp className="w-4 h-4 group-hover/toggle:transform group-hover/toggle:-translate-y-0.5 transition-transform" />
+                    <ChevronUp className="w-4 h-4 group-hover/toggle:-translate-y-0.5 transition-transform" />
                   ) : (
-                    <ChevronDown className="w-4 h-4 group-hover/toggle:transform group-hover/toggle:translate-y-0.5 transition-transform" />
+                    <ChevronDown className="w-4 h-4 group-hover/toggle:translate-y-0.5 transition-transform" />
                   )}
                   <span>{expandedId === config._id ? 'Ocultar detalles' : 'Ver detalles'}</span>
                 </button>
@@ -124,7 +136,7 @@ const ConfigsTab = ({ onImport }) => {
                 {expandedId === config._id && (
                   <div className="mt-6 animate-in slide-in-from-top-2 duration-300">
                     <div className="bg-slate-900/60 backdrop-blur-sm rounded-xl p-6 border border-slate-700/30">
-                      {/* Información de la Pieza */}
+                      {/* Pieza Info */}
                       <div className="mb-8">
                         <h4 className="text-lg font-semibold text-white mb-4 flex items-center space-x-2">
                           <Package className="w-5 h-5 text-blue-400" />
@@ -136,101 +148,23 @@ const ConfigsTab = ({ onImport }) => {
                         </div>
                       </div>
 
-                      {/* Parámetros de Producción */}
+                      {/* Parameters Grid */}
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                        {/* Coste Material */}
-                        <div className="flex items-start space-x-3 p-4 bg-slate-800/50 rounded-lg border border-slate-700/30">
-                          <div className="flex-shrink-0 w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
-                            <DollarSign className="w-5 h-5 text-green-400" />
-                          </div>
-                          <div>
-                            <p className="text-slate-400 text-sm font-medium mb-1">Coste Filamento</p>
-                            <p className="text-white text-lg font-bold">{config.params.filamentCost}€/kg</p>
-                          </div>
-                        </div>
-
-                        {/* Peso Pieza */}
-                        <div className="flex items-start space-x-3 p-4 bg-slate-800/50 rounded-lg border border-slate-700/30">
-                          <div className="flex-shrink-0 w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                            <Weight className="w-5 h-5 text-purple-400" />
-                          </div>
-                          <div>
-                            <p className="text-slate-400 text-sm font-medium mb-1">Peso Pieza</p>
-                            <p className="text-white text-lg font-bold">{config.params.pieceWeight}g</p>
-                          </div>
-                        </div>
-
-                        {/* Tiempo Impresión */}
-                        <div className="flex items-start space-x-3 p-4 bg-slate-800/50 rounded-lg border border-slate-700/30">
-                          <div className="flex-shrink-0 w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                            <Clock className="w-5 h-5 text-blue-400" />
-                          </div>
-                          <div>
-                            <p className="text-slate-400 text-sm font-medium mb-1">Tiempo Impresión</p>
-                            <p className="text-white text-lg font-bold">{formatTime(config.params.printTime)}</p>
-                          </div>
-                        </div>
-
-                        {/* Tiempo Mano de Obra */}
-                        <div className="flex items-start space-x-3 p-4 bg-slate-800/50 rounded-lg border border-slate-700/30">
-                          <div className="flex-shrink-0 w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center">
-                            <Timer className="w-5 h-5 text-orange-400" />
-                          </div>
-                          <div>
-                            <p className="text-slate-400 text-sm font-medium mb-1">Tiempo Mano Obra</p>
-                            <p className="text-white text-lg font-bold">{formatTime(config.params.laborTime)}</p>
-                          </div>
-                        </div>
+                        {renderParameterCard(DollarSign, "Coste Filamento", `${config.params.filamentCost}€/kg`, DollarSign, "green")}
+                        {renderParameterCard(Weight, "Peso Pieza", `${config.params.pieceWeight}g`, Weight, "purple")}
+                        {renderParameterCard(Clock, "Tiempo Impresión", formatTime(config.params.printTime), Clock, "blue")}
+                        {renderParameterCard(Timer, "Tiempo Mano Obra", formatTime(config.params.laborTime), Timer, "orange")}
                       </div>
 
-                      {/* Costes y Energía */}
+                      {/* Additional Parameters */}
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                        {/* Coste Mano de Obra */}
-                        <div className="flex items-start space-x-3 p-4 bg-slate-800/50 rounded-lg border border-slate-700/30">
-                          <div className="flex-shrink-0 w-10 h-10 bg-yellow-500/20 rounded-lg flex items-center justify-center">
-                            <DollarSign className="w-5 h-5 text-yellow-400" />
-                          </div>
-                          <div>
-                            <p className="text-slate-400 text-sm font-medium mb-1">Coste Mano Obra</p>
-                            <p className="text-white text-lg font-bold">{config.params.laborCost}€/h</p>
-                          </div>
-                        </div>
-
-                        {/* Consumo Energía */}
-                        <div className="flex items-start space-x-3 p-4 bg-slate-800/50 rounded-lg border border-slate-700/30">
-                          <div className="flex-shrink-0 w-10 h-10 bg-cyan-500/20 rounded-lg flex items-center justify-center">
-                            <Zap className="w-5 h-5 text-cyan-400" />
-                          </div>
-                          <div>
-                            <p className="text-slate-400 text-sm font-medium mb-1">Consumo</p>
-                            <p className="text-white text-lg font-bold">{config.params.powerConsumption}W</p>
-                          </div>
-                        </div>
-
-                        {/* Precio Electricidad */}
-                        <div className="flex items-start space-x-3 p-4 bg-slate-800/50 rounded-lg border border-slate-700/30">
-                          <div className="flex-shrink-0 w-10 h-10 bg-indigo-500/20 rounded-lg flex items-center justify-center">
-                            <Zap className="w-5 h-5 text-indigo-400" />
-                          </div>
-                          <div>
-                            <p className="text-slate-400 text-sm font-medium mb-1">Precio Electricidad</p>
-                            <p className="text-white text-lg font-bold">{config.params.electricityPrice}€/kWh</p>
-                          </div>
-                        </div>
-
-                        {/* Margen Seguridad */}
-                        <div className="flex items-start space-x-3 p-4 bg-slate-800/50 rounded-lg border border-slate-700/30">
-                          <div className="flex-shrink-0 w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center">
-                            <Shield className="w-5 h-5 text-red-400" />
-                          </div>
-                          <div>
-                            <p className="text-slate-400 text-sm font-medium mb-1">Margen Seguridad</p>
-                            <p className="text-white text-lg font-bold">x{config.params.safetyMargin}</p>
-                          </div>
-                        </div>
+                        {renderParameterCard(DollarSign, "Coste Mano Obra", `${config.params.laborCost}€/h`, DollarSign, "yellow")}
+                        {renderParameterCard(Zap, "Consumo", `${config.params.powerConsumption}W`, Zap, "cyan")}
+                        {renderParameterCard(Zap, "Precio Electricidad", `${config.params.electricityPrice}€/kWh`, Zap, "indigo")}
+                        {renderParameterCard(Shield, "Margen Seguridad", `x${config.params.safetyMargin}`, Shield, "red")}
                       </div>
 
-                      {/* Margen de Beneficio */}
+                      {/* Profit Margin */}
                       <div className="flex justify-center">
                         <div className="flex items-start space-x-3 p-6 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl border border-green-500/30 min-w-64">
                           <div className="flex-shrink-0 w-12 h-12 bg-green-500/30 rounded-lg flex items-center justify-center">
