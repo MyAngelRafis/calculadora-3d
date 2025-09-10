@@ -4,10 +4,19 @@ import ParameterSection from './ParameterSection';
 import InputField from './InputField';
 import ProfitSlider from './ProfitSlider';
 import QuickPreview from './QuickPreview';
+import { Save } from 'lucide-react';
 
-const CalculatorTab = ({ params, calculations, handleParamChange }) => {
+const CalculatorTab = ({ params, calculations, handleParamChange, onSave }) => {
   return (
     <div className="grid grid-cols-1 gap-6">
+      <button
+        onClick={onSave}
+        className="flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors w-full md:w-auto"
+      >
+        <Save className="w-4 h-4" />
+        <span>Guardar configuración</span>
+      </button>
+      
       {/* Parameters Section */}
       <div className="space-y-6">
         <ParameterSection title="Pieza" icon={ToolCaseIcon} iconColor="text-blue-400">
