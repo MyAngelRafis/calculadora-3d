@@ -149,18 +149,18 @@ const ConfigsTab = ({ onImport }) => {
                       </div>
 
                       {/* Parameters Grid */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                         {renderParameterCard(DollarSign, "Coste Filamento", `${config.params.filamentCost}€/kg`, DollarSign, "green")}
-                        {renderParameterCard(Weight, "Peso Pieza", `${config.params.pieceWeight}g`, Weight, "purple")}
-                        {renderParameterCard(Clock, "Tiempo Impresión", formatTime(config.params.printTime), Clock, "blue")}
-                        {renderParameterCard(Timer, "Tiempo Mano Obra", formatTime(config.params.laborTime), Timer, "orange")}
+                        {renderParameterCard(Weight, "Peso Pieza", `${config.params.pieceWeight}g`, Weight, "blue")}
+                        {renderParameterCard(Clock, "Tiempo Impresión", formatTime(config.params.printTime), Clock, "yellow")}
+                        {renderParameterCard(Timer, "Tiempo Mano Obra", formatTime(config.params.laborTime), Timer, "green")}
                       </div>
 
                       {/* Additional Parameters */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                         {renderParameterCard(DollarSign, "Coste Mano Obra", `${config.params.laborCost}€/h`, DollarSign, "yellow")}
-                        {renderParameterCard(Zap, "Consumo", `${config.params.powerConsumption}W`, Zap, "cyan")}
-                        {renderParameterCard(Zap, "Precio Electricidad", `${config.params.electricityPrice}€/kWh`, Zap, "indigo")}
+                        {renderParameterCard(Zap, "Consumo", `${config.params.powerConsumption}W`, Zap, "yellow")}
+                        {renderParameterCard(Zap, "Precio Electricidad", `${config.params.electricityPrice}€/kWh`, Zap, "yellow")}
                         {renderParameterCard(Shield, "Margen Seguridad", `x${config.params.safetyMargin}`, Shield, "red")}
                       </div>
 
