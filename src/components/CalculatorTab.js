@@ -8,7 +8,7 @@ import { Save } from 'lucide-react';
 
 const CalculatorTab = ({ params, calculations, handleParamChange, onSave }) => {
   return (
-    <div className="grid grid-cols-1 gap-6">
+    <div className="py-8 space-y-8">
       <button
         onClick={onSave}
         className="flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors w-full md:w-auto"
@@ -16,6 +16,9 @@ const CalculatorTab = ({ params, calculations, handleParamChange, onSave }) => {
         <Save className="w-4 h-4" />
         <span>Guardar configuración</span>
       </button>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      
       
       {/* Parameters Section */}
       <div className="space-y-6">
@@ -113,6 +116,7 @@ const CalculatorTab = ({ params, calculations, handleParamChange, onSave }) => {
         {/* Quick Results Preview */}
         <QuickPreview calculations={calculations} profitMargin={params.profitMargin} />
       </div>
+    </div>
     </div>
   );
 };
