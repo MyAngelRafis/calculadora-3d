@@ -5,7 +5,12 @@ const API_URL =
 
 // Obtener todas las configuraciones
 export async function getConfigs() {
-  const res = await fetch(API_URL);
+  const res = await fetch(API_URL, {
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
   if (!res.ok) throw new Error("Error al obtener configuraciones");
   return await res.json();
 }
@@ -14,7 +19,10 @@ export async function getConfigs() {
 export async function saveConfig(config) {
   const res = await fetch(API_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    credentials: 'include',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(config)
   });
   if (!res.ok) throw new Error("Error al guardar configuración");

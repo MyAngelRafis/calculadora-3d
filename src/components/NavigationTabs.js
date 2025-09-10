@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings, PieChart } from 'lucide-react';
+import { Settings, PieChart, Save } from 'lucide-react';
 
 const NavigationTabs = ({ activeTab, setActiveTab }) => {
   return (
@@ -26,6 +26,17 @@ const NavigationTabs = ({ activeTab, setActiveTab }) => {
         >
           <PieChart className="w-4 h-4" />
           <span>Resultados</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('configs')}
+          className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-all duration-200 ${
+            activeTab === 'configs' 
+              ? 'bg-blue-600 text-white shadow-lg' 
+              : 'text-gray-300 hover:text-white hover:bg-gray-700/50'
+          }`}
+        >
+          <Save className="w-4 h-4" />
+          <span>Configuraciones</span>
         </button>
       </div>
     </div>
